@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registrasi Wajah</title>
+    <script defer src="face-api.min.js"></script>
+</head>
+<body>
+    <h2>Registrasi Wajah Baru</h2>
+    <video id="video" width="720" height="560" autoplay muted></video>
+    <form id="registerForm" method="POST" enctype="multipart/form-data" action="register_user.php">
+        <input type="text" name="name" placeholder="Nama" required>
+        <select name="gender">
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+        <input type="hidden" name="imageData" id="imageData">
+        <button type="submit">Daftar</button>
+    </form>
+
+    <script>
+        const video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: {} })
+            .then(stream => video.srcObject = stream);
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            document.getElementById('imageData').value = canvas.toDataURL('image/png');
+            e.target.submit();
+        });
+    </script>
+</body>
+</html>
