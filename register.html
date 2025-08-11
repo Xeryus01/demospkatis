@@ -3,20 +3,95 @@
 <head>
     <title>Registrasi Wajah</title>
     <script defer src="face-api.min.js"></script>
+    <style>
+        body {
+            background: #f4f6fa;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+            text-align: center;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 24px;
+        }
+        .menu-back {
+            display: inline-block;
+            margin-bottom: 24px;
+            padding: 10px 24px;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .menu-back:hover {
+            background: #0056b3;
+        }
+        #video {
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
+            background: #222;
+        }
+        form {
+            margin-top: 16px;
+        }
+        input[type="text"], select {
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 60%;
+            font-size: 1em;
+        }
+        button[type="submit"] {
+            padding: 10px 24px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 12px;
+        }
+        button[type="submit"]:hover {
+            background: #0056b3;
+        }
+        #status {
+            margin-top: 16px;
+            font-size: 1.1em;
+            color: #333;
+            min-height: 40px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Registrasi Wajah Baru</h2>
-    <video id="video" width="720" height="560" autoplay muted></video>
-    <form id="registerForm" method="POST" enctype="multipart/form-data" action="register_user.php">
-        <input type="text" name="name" placeholder="Nama" required>
-        <select name="gender">
-            <option value="Laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-        </select>
-        <input type="hidden" name="imageData" id="imageData">
-        <button type="submit">Daftar</button>
-    </form>
-
+    <div class="container">
+        <h2>Registrasi Wajah Baru</h2>
+        <a href="index.html" class="menu-back">Kembali ke Absensi</a>
+        <video id="video" width="720" height="560" autoplay muted></video>
+        <form id="registerForm" method="POST" enctype="multipart/form-data" action="register_user.php">
+            <input type="text" name="name" placeholder="Nama" required>
+            <select name="gender">
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+            </select>
+            <input type="hidden" name="imageData" id="imageData">
+            <button type="submit">Daftar</button>
+        </form>
+        <div id="status"></div>
+    </div>
     <script>
         const video = document.getElementById('video');
         navigator.mediaDevices.getUserMedia({ video: {} })

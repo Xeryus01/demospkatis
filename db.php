@@ -1,3 +1,8 @@
 <?php
-$pdo = new PDO("mysql:host=localhost;dbname=absensi", "root", "");
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=demospkatis", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Koneksi database gagal: " . $e->getMessage());
+}
 ?>

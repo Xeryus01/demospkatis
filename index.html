@@ -2,12 +2,64 @@
 <html>
 <head>
     <title>Absensi Wajah</title>
-    <script defer src="face-api.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
     <script defer src="script.js"></script>
+    <style>
+        body {
+            background: #f4f6fa;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+            text-align: center;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 24px;
+        }
+        .menu-register {
+            display: inline-block;
+            margin-bottom: 24px;
+            padding: 10px 24px;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .menu-register:hover {
+            background: #0056b3;
+        }
+        #video {
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            margin-bottom: 20px;
+            background: #222;
+        }
+        #status {
+            margin-top: 16px;
+            font-size: 1.1em;
+            color: #333;
+            min-height: 40px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Absensi Menggunakan Wajah</h2>
-    <video id="video" width="720" height="560" autoplay muted></video>
-    <div id="status"></div>
+    <div class="container">
+        <h2>Absensi Menggunakan Wajah</h2>
+        <a href="register.html" class="menu-register">Daftar Wajah Baru</a>
+        <br>
+        <video id="video" width="720" height="560" autoplay muted></video>
+        <div id="status">Menunggu deteksi wajah...</div>
+    </div>
 </body>
 </html>
