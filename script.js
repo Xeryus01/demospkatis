@@ -1,81 +1,22 @@
 const video = document.getElementById('video');
 const statusDiv = document.getElementById('status');
 
+// Memuat model face-api.js
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('models'),
     faceapi.nets.tinyYolov2.loadFromUri('models'),
-    faceapi.nets.ssdMobilenetv1.loadFromUri('models'), // <-- Tambahkan baris ini
+    faceapi.nets.ssdMobilenetv1.loadFromUri('models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('models'),
     faceapi.nets.faceRecognitionNet.loadFromUri('models'),
     faceapi.nets.ageGenderNet.loadFromUri('models')
 ]).then(startVideo);
 
+// Memulai video
 function startVideo() {
     navigator.mediaDevices.getUserMedia({ video: {} })
         .then(stream => video.srcObject = stream)
         .catch(err => console.error(err));
 }
-
-// video.addEventListener('play', async () => {
-//     try {
-//         const labeledDescriptors = await loadLabeledImages();
-//         if (!labeledDescriptors || labeledDescriptors.length === 0) {
-//             statusDiv.innerHTML = "Data wajah tidak ditemukan. Silakan daftar terlebih dahulu.";
-//             console.error("Tidak ada data wajah untuk FaceMatcher.");
-//             return;
-//         }
-//         const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.6);
-
-//         setInterval(async () => {
-//             try {
-//                 const detections = await faceapi.detectAllFaces(video, new faceapi.SsdMobilenetv1Options())
-//                     .withFaceLandmarks()
-//                     .withFaceDescriptors()
-//                     .withAgeAndGender();
-                    
-//                 if (detections.length > 0) {
-//                     const detection = detections[0];
-//                     const bestMatch = faceMatcher.findBestMatch(detection.descriptor);
-
-//                     const gender = detection.gender === 'male' ? 'Laki-laki' : 'Perempuan';
-//                     const age = Math.round(detection.age);
-
-//                     // Tambahkan pada interval deteksi wajah:
-//                     if (bestMatch.label !== 'unknown') {
-//                         statusDiv.innerHTML = `
-//                             <strong>Nama:</strong> ${bestMatch.label} <br>
-//                             <strong>Jenis Kelamin:</strong> ${gender} <br>
-//                             <strong>Perkiraan Umur:</strong> ${age} tahun
-//                         `;
-//                         sendAttendance(bestMatch.label);
-
-//                         // Capture foto dari video
-//                         const canvas = document.createElement('canvas');
-//                         canvas.width = video.videoWidth;
-//                         canvas.height = video.videoHeight;
-//                         const ctx = canvas.getContext('2d');
-//                         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-//                         const imageData = canvas.toDataURL('image/png');
-
-//                         // Tampilkan popup
-//                         showPopup({
-//                             name: bestMatch.label,
-//                             gender: gender,
-//                             age: age,
-//                             imageData: imageData
-//                         });
-//                     }
-//                 }
-//             } catch (err) {
-//                 console.error("Interval error:", err);
-//                 statusDiv.innerHTML = "Terjadi error saat deteksi wajah: " + err.message;
-//             }
-//         }, 2000);
-//     } catch (err) {
-//         console.error("Play event error:", err);
-//         statusDiv.innerHTML = "Terjadi error saat inisialisasi: " + err.message;
-//     }
-// });
 
 let detectionInterval = null;
 let isPopupActive = false;
@@ -178,6 +119,7 @@ video.addEventListener('play', async () => {
 }
 );
 
+// Memuat gambar yang telah diberi label
 async function loadLabeledImages() {
     try {
         const res = await fetch('get_users.php');

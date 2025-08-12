@@ -93,10 +93,12 @@
         <div id="status"></div>
     </div>
     <script>
+        // Memuat model face-api.js
         const video = document.getElementById('video');
         navigator.mediaDevices.getUserMedia({ video: {} })
             .then(stream => video.srcObject = stream);
 
+        // Mengambil snapshot dari video saat pendaftaran wajah dan submit form
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const canvas = document.createElement('canvas');

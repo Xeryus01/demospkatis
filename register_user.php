@@ -1,22 +1,26 @@
 <?php
 require 'db.php';
 
+// Pengambilan data POST dari form input
 $name = $_POST['name'];
 $gender = $_POST['gender'];
 $imageData = $_POST['imageData'];
 
+// Menentukan path untuk menyimpan gambar
 $imagePath = 'uploads/' . time() . '.png';
 
-// Simpan gambar dari base64
+// Menyimpan gambar dengan base64
 $img = str_replace('data:image/png;base64,', '', $imageData);
 $img = str_replace(' ', '+', $img);
 $data = base64_decode($img);
 file_put_contents($imagePath, $data);
 
-// Simpan ke database
+// Menyimpan data ke database
 $stmt = $pdo->prepare("INSERT INTO users (name, gender, image_path) VALUES (?, ?, ?)");
 $stmt->execute([$name, $gender, $imagePath]);
 ?>
+
+<!-- HTML (user interface) untuk menampilkan hasil registrasi -->
 <!DOCTYPE html>
 <html>
 <head>
